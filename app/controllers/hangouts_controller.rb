@@ -23,6 +23,8 @@ class HangoutsController < ApplicationController
   # POST /hangouts or /hangouts.json
   def create
     @hangout = Hangout.new(hangout_params)
+    @user = current_user
+    @hangout.user = @user
 
     respond_to do |format|
       if @hangout.save
@@ -61,7 +63,7 @@ class HangoutsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_hangout
-      @hangout = Hangout.find(params[:id])
+      @hangout = Hangout.friendly.find(params[:id])
     end
 
     # Only allow a list of trusted parameters through.
